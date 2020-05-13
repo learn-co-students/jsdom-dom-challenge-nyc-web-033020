@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function(e) {
   let counter = document.getElementById('counter');
-  console.log('pauseButtonHasBeenClicked line 3', pauseButtonHasBeenClicked);
+  console.log('pauseResumeButtonHasBeenClicked line 3', pauseResumeButtonHasBeenClicked);
 
   let plus = document.getElementById('plus');
   plus.addEventListener('click', function(e) {
-    if (pauseButtonHasBeenClicked == false) { 
+    if (pauseResumeButtonHasBeenClicked == false) { 
       // if our global var is true, don't do anything
       // if it is false, the button should do something
       let newValue = parseInt(counter.innerText) + 1;
@@ -26,29 +26,42 @@ document.addEventListener('DOMContentLoaded', function(e) {
   heart.addEventListener('click', heartCallback);
 
   // Pause the counter
-  let pauseButton = document.getElementById('pause');
-  pauseButton.addEventListener('click', function(e) {
-    clearInterval(timerIncrementEverySecond);
-    pauseButtonHasBeenClicked = true; 
-    console.log('pauseButtonHasBeenClicked pausebutton clicked', pauseButtonHasBeenClicked);
+  let pauseResumeButton = document.getElementById('pause');
+  pauseResumeButton.addEventListener('click', function(e) {
+    console.log('pause button clicked'); 
+    
+    if (pauseResumeButtonHasBeenClicked == false) {
+      clearInterval(timerIncrementEverySecond);
+      pauseResumeButtonHasBeenClicked = true;
+      pauseResumeButton.innerText = "resume";
 
-    // cancel button clicking ability
+    } else if (pauseResumeButtonHasBeenClicked == true){
+      timerIncrementEverySecond = window.setInterval(function() {
+        let newValue = parseInt(counter.innerText) + 1;
+        counter.innerText = newValue;
+      }, 1000);
+      pauseResumeButtonHasBeenClicked = false;
+      pauseResumeButton.innerText = "pause";
+    }
+
+    console.log("pauseResumeButtonHasBeenClicked status: ", pauseResumeButtonHasBeenClicked)
   });
 });
 
 // helps keep track of whether or not the pause button has been clicked
-let pauseButtonHasBeenClicked = false;
+let pauseResumeButtonHasBeenClicked = false;
 
-
+// callback to respond to a click of the minus button
 let minusCallback = function(e) {
-  if (pauseButtonHasBeenClicked == false) {
+  if (pauseResumeButtonHasBeenClicked == false) {
     let newValue = parseInt(counter.innerText) - 1;
     counter.innerText = newValue;
   }
 }
 
+// callback to respond to click of heart button
 let heartCallback = function(e) {
-  if (pauseButtonHasBeenClicked == false) {
+  if (pauseResumeButtonHasBeenClicked == false) {
     let likes = document.getElementsByClassName('likes')[0];
     let likesLi = document.createElement('li');
     likesLi.innerText = `${counter.innerText} has been liked`;

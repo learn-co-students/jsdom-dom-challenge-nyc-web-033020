@@ -1,67 +1,65 @@
 document.addEventListener('DOMContentLoaded', function(e){
-    const buttonMinus = document.querySelector('#minus') 
-    const buttonPlus = document.querySelector('#plus') 
-    const buttonHeart = document.querySelector('#heart') 
-    const buttonPause = document.querySelector('#pause') 
+    const minusButton = document.querySelector('#minus') 
+    const plusButton = document.querySelector('#plus') 
+    const heartButton = document.querySelector('#heart') 
+    const pauseButton = document.querySelector('#pause') 
     let counter = document.querySelector('#counter') 
 
     let timer = setInterval(Time, 1000) 
 
-    function Time(){
-        let number = parseInt(counter.innerText) + 1
+    function Time() {
+        let number = parseInt(counter.innerText) + 1 
         counter.innerText = number 
     }
 
-    buttonMinus.addEventListener("click", function(e){
-        counter.innerText = parseInt(counter.innerText) - 1
+    minusButton.addEventListener("click", function(e){
+        counter.innerText = parseInt(counter.innerText) - 1 
     }) 
 
-    buttonPlus.addEventListener("click", function(e){
+    plusButton.addEventListener("click", function(e){
         counter.innerText = parseInt(counter.innerText) + 1 
     }) 
 
-    buttonPause.addEventListener('click', function(e){
-        if (buttonPause.innerText === 'pause'){
+    pauseButton.addEventListener('click', function(e){
+        if (pauseButton.innerText === 'pause') {
             clearInterval(timer) 
-            buttonPause.innerText = 'resume'
+            pauseButton.innerText = 'resume' 
         } else {
-            timer = setInterval(Time, 1000)
-            buttonPause.innerText = 'pause' 
+            timer = setInterval(Time, 1000) 
+            pauseButton.innerText = 'pause' 
         }
-    })
-    
-    const LikesCount = {} 
-    buttonHeart.addEventListener('click', function(e){
-        
-        const likeList = document.querySelector('.likes') 
-        const counterNum = counter.innerHTML 
+    }) 
+
+    const likesCount = {} 
+    heartButton.addEventListener('click', function(e){
+        const likesList = document.querySelector('.likes') 
+        const numCounter = counter.innerHTML 
         const li = document.createElement('li') 
 
-        if(!likesCount[counterNum]){
-            likesCount[counterNum] = 1 
-            li.textContent = '${counterNum} has been liked 1 time' 
+        if(!likesCount[numCounter]) {
+            likesCount[numCounter] = 1 
+            li.textContent = `${numCounter} has been liked 1 time` 
             likesList.appendChild(li) 
             console.log(likesCount) 
         } else {
-            likesCount[counterNum]++ 
+            likesCount[numCounter]++ 
             console.log(likesCount) 
-            let oldLineItem = document.getElementsByClassName('${counterNum') 
+            let oldLineItem = document.getElementsByClassName(`${numCounter}`) 
             console.log(oldLineItem) 
-            li.textContent = '${counterNum} has been liked ${likesCount[counterNum]} times' 
+            li.textContent = `${numCounter} has been liked ${likesCount[numCounter]} times` 
             likesList.appendChild(li) 
         }
-    })
+    }) 
     let commenter = document.querySelector('#comment-input') 
-
+    
     document.addEventListener('submit', function(e){
         e.preventDefault() 
         let input = commenter.value 
         const listOfComments = document.querySelector('#list') 
         let newComment = document.createElement('p') 
-        newComment.innerHTML = input 
-        console.log(newComment)  
-        console.log(listOfComments)
+        console.log(newComment) 
+        console.log(listOfComments) 
         listOfComments.appendChild(newComment) 
-        e.target.reset()
+        e.target.reset() 
     })
-}) 
+})
